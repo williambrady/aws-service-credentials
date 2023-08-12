@@ -72,6 +72,7 @@ This policy allows an IAM user to change their own Access Key:
 ### Dependencies
 
 Install the following utilities in your development environment: 
+
     - aws cli v.2
     - jq
     - python3-pip
@@ -79,6 +80,8 @@ Install the following utilities in your development environment:
 
 Reference commands:
 
+```
 aws cloudformation --profile bio create-stack --stack-name bioDeployer --template-body file://cft/deployer.yaml --capabilities CAPABILITY_NAMED_IAM --tags Key=owner,Value=william.brady
 aws cloudformation --profile bio update-stack --stack-name bioDeployer --template-body file://cft/deployer.yaml --capabilities CAPABILITY_NAMED_IAM --tags Key=owner,Value=william.brady
 aws cloudformation --profile bio delete-stack --stack-name bioDeployer
+```
