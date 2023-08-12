@@ -13,8 +13,28 @@ Let's build:
         - [x] Stash credentials in AWS Secrets Manager or SSM Parameter Store
     - [ ] Create Policy
         - change access key
-            ```
-            {
+        - AmazonAppStreamReadOnlyAccess
+        - SecurityAudit
+        - ViewOnlyAccess
+        - AmazonMacieFullAccess
+        - AWSShieldDRTAccessPolicy
+    - [ ] Create Group
+    - [ ] Add policies to Group
+    - [ ] Create User
+    - [ ] Add User to Group
+    - [ ] Create AssumeRole that can write to AWS Secrets
+    - [ ] Create AssumeRole that can read from AWS Secrets
+    - [ ] Create Secret
+    - [ ] Stash User Access Key and Secret Access Key in AWS Secret
+    - [ ] Retrieve secrets to STDOUT
+    - [ ] Rotate secret from CLI
+    - [ ] Rotate secret automatically (EventBridge Trigger, ECS task, whatever makes sense)
+
+For practical testing, this will be built around the user required for [prowler](https://github.com/prowler-cloud/prowler) to function.
+
+This policy allows an IAM user to change their own Access Key:
+```
+{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -37,26 +57,8 @@ Let's build:
         }
     ]
 }
-            ```
-        - AmazonAppStreamReadOnlyAccess
-        - SecurityAudit
-        - ViewOnlyAccess
-        - AmazonMacieFullAccess
-        - AWSShieldDRTAccessPolicy
+```
 
-    - [ ] Create Group
-    - [ ] Add policies to Group
-    - [ ] Create User
-    - [ ] Add User to Group
-    - [ ] Create AssumeRole that can write to AWS Secrets
-    - [ ] Create AssumeRole that can read from AWS Secrets
-    - [ ] Create Secret
-    - [ ] Stash User Access Key and Secret Access Key in AWS Secret
-    - [ ] Retrieve secrets to STDOUT
-    - [ ] Rotate secret from CLI
-    - [ ] Rotate secret automatically (EventBridge Trigger, ECS task, whatever makes sense)
-
-For practical testing, this will be built around the user required for [prowler](https://github.com/prowler-cloud/prowler) to function.
 
 ## Assets
 
