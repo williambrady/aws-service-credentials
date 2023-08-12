@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+
+  deployerGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: bioDeployer
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Path: /bio/
+
+  deployerUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: bioDeployer
+      Path: /bio/
+    DependsOn: deployerGroup
+  
+  userInGroup:
+    Type: AWS::IAM::UserToGroupAddition
+    Properties:
+      GroupName: bioDeployer
+      Users:
+        - Ref: deployerUser
+
+  userAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: bioDeployer
+    DependsOn: deployerUser
+
+  deployerAccessKey:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub
+        - '/bio/${accessKey}'
+        - accessKey: !Ref userAccessKey
+      Type: String
+      Value: !GetAtt userAccessKey.SecretAccessKey
+      Description: The access key for the deployer user
+  
+Outputs:
+
+  deployerUser:
+    Description: The deployer user
+    Value: !Ref deployerUser
+    Export:
+      Name: deployerUser
+
+  deployerGroup:
+    Description: The deployer group
+    Value: !Ref deployerGroup
+    Export:
+      Name: deployerGroup
+
+  deployerAccessKey:
+    Description: The deployer access key
+    Value: !Ref userAccessKey
+    Export:
+      Name: deployerAccessKey
